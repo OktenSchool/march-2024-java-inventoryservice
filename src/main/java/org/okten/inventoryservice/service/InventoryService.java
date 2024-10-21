@@ -33,7 +33,7 @@ public class InventoryService {
 
     public void updateInventory(InventoryDto inventoryDto) {
         inventoryRepository
-                .findByStoreId(inventoryDto.storeId())
+                .findByStoreIdAndProductId(inventoryDto.storeId(), inventoryDto.productId())
                 .ifPresentOrElse(
                         existingInventory -> {
                             log.info("Updating inventory for store '{}'", inventoryDto.storeId());
@@ -60,5 +60,9 @@ public class InventoryService {
             log.info("Updating product status to AVAILABLE...");
             productService.updateProductAvailability(inventoryDto.productId(), ProductAvailability.AVAILABLE);
         }
+    }
+
+    public void deleteInventoryOfProduct(Long productId) {
+        inventoryRepository.deleteInventoryByProductId(productId);
     }
 }

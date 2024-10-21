@@ -10,6 +10,14 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://dev-d8rm3bg4cwywnjin.eu.auth0.com/
+  kafka:
+    consumer:
+      topic: product-deleted-events
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
 logging:
   level:
     sun:
